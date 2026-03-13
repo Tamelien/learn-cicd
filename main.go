@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -95,6 +96,11 @@ func main() {
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	portInt, err := strconv.Atoi(port)
+	if err != nil {
+		log.Fatal("Invalid port:", err)
+	}
+
+	log.Printf("Serving on port: %d\n", portInt)
 	log.Fatal(srv.ListenAndServe())
 }
